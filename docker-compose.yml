@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: citymove-backend
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - NODE_ENV=production
+      - OSRM_URL=https://router.project-osrm.org
+      - CLIENT_ORIGIN=http://localhost:5173
+      - DB_PATH=/app/data/citymove.db
+      - UPLOAD_DIR=/app/uploads
+    volumes:
+      - citymove-data:/app/data
+      - citymove-uploads:/app/uploads
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: citymove-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:3001
+    depends_on:
+      - backend
+
+volumes:
+  citymove-data:
+  citymove-uploads:
+

@@ -1,0 +1,23 @@
+node_modules
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.local
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+backend/citymove.db
+backend/citymove.db-journal
+
+# Uploads
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Build
+dist
+dist-ssr
+*.local
+
